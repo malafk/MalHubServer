@@ -1,0 +1,5 @@
+file-version: 1.0
+port: 25565
+online-mode: true
+items:
+  grappler: "&d⛏ &lGrappler &7[Right Click]"
