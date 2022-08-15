@@ -16,6 +16,7 @@ import lol.maltest.entity.NPCEntity;
 import lol.maltest.listeners.PlayerListener;
 import lol.maltest.managers.HologramManager;
 import lol.maltest.managers.NPCManager;
+import lol.maltest.managers.PlayerManager;
 import lol.maltest.utils.ChatUtil;
 import lol.maltest.utils.LoggerUtil;
 import net.kyori.adventure.text.Component;
@@ -39,6 +40,7 @@ public class MalHubServer {
     public YamlDocument hologramConfig;
     public YamlDocument npcConfig;
 
+    public PlayerManager playerManager;
     public NPCManager npcManager;
     public HologramManager hologramManager;
 
@@ -54,11 +56,8 @@ public class MalHubServer {
         server = MinecraftServer.init();
 
         new File("data/").mkdirs();
-        Path dataDir = Path.of("data/");
 
         try {
-//            serverConfig = YamlDocument.create(new File("data/config.yml"), getClass().getClassLoader().getResource("config.yml"),
-//                    GeneralSettings.DEFAULT, LoaderSettings.builder().setAutoUpdate(false).build());
             serverConfig = YamlDocument.create(new File("data", "config.yml"), getClass().getClassLoader().getResource("config.yml").openStream(),
                     GeneralSettings.DEFAULT, LoaderSettings.builder().setAutoUpdate(true).build(), DumperSettings.DEFAULT, UpdaterSettings.builder().setVersioning(new BasicVersioning("file-version")).build());
 
@@ -88,6 +87,7 @@ public class MalHubServer {
         LoggerUtil.info("Server running on port: " + port);
         server.start("0.0.0.0", port);
 
+        this.playerManager = new PlayerManager(this);
         this.npcManager = new NPCManager(this);
         this.hologramManager = new HologramManager(this);
         playerListener = new PlayerListener(plugin);

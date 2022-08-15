@@ -2,21 +2,12 @@ package lol.maltest.commands.npcs;
 
 import lol.maltest.MalHubServer;
 import lol.maltest.entity.NPCEntity;
-import lol.maltest.impl.events.Hologram;
+import lol.maltest.impl.Hologram;
 import lol.maltest.utils.ChatUtil;
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.format.TextColor;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import net.kyori.adventure.text.serializer.plain.PlainComponentSerializer;
-import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.minestom.server.command.builder.Command;
 import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.entity.Player;
-import net.minestom.server.entity.PlayerSkin;
-import net.minestom.server.utils.StringUtils;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -60,6 +51,8 @@ public class NPCommand extends Command {
         addSubcommand(new RemoveNpcCommand());
         addSubcommand(new SetNPCCommand());
         addSubcommand(new SetNPCSkinCommand());
+        addSubcommand(new SetLineCommand());
+        addSubcommand(new AddLineCommand());
     }
 
     class RemoveNpcCommand extends Command {
@@ -91,19 +84,14 @@ public class NPCommand extends Command {
             addSyntax(((sender, context) -> {
                 Player player = ((Player) sender);
                 String name1 = context.get("name");
-                server.npcManager.createNpc(sender, name1);
-                String[] test = {
-                        "&#084cfbd&#0a4efbf&#0c50fbj&#0e52fbu &#1054fbo&#1256fbi&#1458fbs&#165afbd&#185cfbf&#1a5efbj&#1c60fbs&#1e62fbd&#2064fbi&#2266fbj&#2468fbs&#266afbd&#286cfbi &#2a6efbj&#2c70fbd&#2e72fbs&#3074fbo&#3276fci&#3478fcs&#367afcd&#387cfcj&#3a7efcf&#3c80fcs&#3e82fcd&#4084fcf&#4286fch&#4488fcs&#468afcd&#488cfco&#4a8efci&#4c90fch&#4e92fcn&#5094fcs&#5296fco&#5498fcd&#569afch&#589cfcn&#5a9efcd&#5ba1fcs&#5da3fcf&#5fa5fch&#61a7fcd&#63a9fcs&#65abfcd&#67adfcs&#69affch&#6bb1fcs&#6db3fcd&#6fb5fcb&#71b7fch&#73b9fcj&#75bbfcd&#77bdfcs&#79bffcf&#7bc1fcb&#7dc3fch&#7fc5fcj&#81c7fcs&#83c9fcd&#85cbfdb&#87cdfdd&#89cffds&#8bd1fdb&#8dd3fdf&#8fd5fdd&#91d7fds&#93d9fdh&#95dbfdb&#97ddfdd&#99dffds&#9be1fdh&#9de3fdd&#9fe5fds&#a1e7fdb&#a3e9fdf&#a5ebfdj&#a7edfdh&#a9effds&#abf1fdd&#adf3fdb",
-                        "&6Middle",
-                        "7afdf8ds0f8dsf",
-                        "&8Bottom \uD83D\uDE80"
-                };
+                NPCEntity npc = server.npcManager.createNpc(sender, name1);
+                Hologram hologram = null;
                 try {
-                    Hologram hologram = server.hologramManager.createHologram("test" + new Random().nextInt(444), new ArrayList<>(Arrays.asList(test)), player.getPosition());
-                    hologram.create(true);
+                    hologram = server.hologramManager.createHologram(npc.id(), new ArrayList<>(Arrays.asList("&7Modify me with /npc!")), player.getPosition(), true);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+                hologram.create(true);
                 sender.sendMessage(ChatUtil.color("&b&lNPCS &8- &7The NPC has been created!"));
             }), name);
         }
@@ -169,6 +157,48 @@ public class NPCommand extends Command {
                 server.npcManager.setCommand(id, str);
                 sender.sendMessage(ChatUtil.color("&b&lNPCS &8- &7The NPC's command has been set!"));
             }), id1, command);
+        }
+    }
+
+    class SetLineCommand extends Command {
+
+        SetLineCommand() {
+                super("setline");
+
+                var id = ArgumentType.String("npcid");
+                var line = ArgumentType.Integer("line");
+                var text = ArgumentType.StringArray("text");
+
+                addSyntax(((sender, context) -> {
+                    String id1 = context.get(id);
+                    int line1 = context.get(line);
+
+                    String[] text1 = context.get(text);
+                    String lineText = String.join(" ", text1);
+
+                    server.hologramManager.setLine(id1, line1, lineText, true);
+                    sender.sendMessage(ChatUtil.color("&b&lNPCS &8- &7The NPC's hologram has been updated!"));
+                }), id, line, text);
+            }
+    }
+
+    class AddLineCommand extends Command {
+
+        AddLineCommand() {
+            super("addline");
+
+            var id = ArgumentType.String("npcid");
+            var text = ArgumentType.StringArray("text");
+
+            addSyntax(((sender, context) -> {
+                String id1 = context.get(id);
+
+                String[] text1 = context.get(text);
+                String lineText = String.join(" ", text1);
+
+                server.hologramManager.addLine(id1, lineText, true);
+                sender.sendMessage(ChatUtil.color("&b&lNPCS &8- &7The NPC's hologram has been updated!"));
+            }), id, text);
         }
     }
 

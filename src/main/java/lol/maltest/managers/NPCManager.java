@@ -77,7 +77,7 @@ public class NPCManager {
     }
 
 
-    public void createNpc(CommandSender sender, String name) {
+    public NPCEntity createNpc(CommandSender sender, String name) {
         UUID uuid = UUID.randomUUID();
         String id = "npc-" + new Random().nextInt(1, 10000);
         PlayerSkin skin = PlayerSkin.fromUsername("maltost");
@@ -108,6 +108,7 @@ public class NPCManager {
         }
 
         npcs.add(npc);
+        return npc;
     }
 
     public NPCEntity getNPC(String id) {

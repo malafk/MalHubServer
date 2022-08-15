@@ -14,6 +14,7 @@ import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.entity.fakeplayer.FakePlayer;
+import net.minestom.server.entity.hologram.Hologram;
 import net.minestom.server.event.EventDispatcher;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.entity.EntityShootEvent;
@@ -79,16 +80,13 @@ public class PlayerListener {
 
         handler.addListener(PlayerSpawnEvent.class, event -> {
             Player player = event.getPlayer();
-//            MinecraftServer.getSchedulerManager().buildTask(new Runnable() {
-//                @Override
-//                public void run() {
-                    if(firstLogin) {
-                        server.npcManager.loadFromConfig();
-                        firstLogin = false;
-                    }
-//                }
-//            }).delay(TaskSchedule.seconds(3)).schedule();
+            if(firstLogin) {
+                server.npcManager.loadFromConfig();
+                server.hologramManager.loadFromConfig();
+                firstLogin = false;
+            }
             player.setGameMode(GameMode.CREATIVE);
+            server.playerManager.createScoreboard(player);
         });
 
         handler.addListener(PlayerSkinInitEvent.class, event -> {
