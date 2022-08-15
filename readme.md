@@ -9,6 +9,7 @@ current features
 - holgrams (only for npcs rn)
 - chat format
 - grappler
+- animated scoreboard
 
 to add
 - automatically hide players at 200 players (to prevent bandwidth and client crashes)
