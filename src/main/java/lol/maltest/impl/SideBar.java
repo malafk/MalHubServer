@@ -21,8 +21,8 @@ public class SideBar {
     private static final int MAX_LINES = 15;
     private static final String MAGIC_STRING = "boardLine_";
     private final Collection<Player> players = new ConcurrentLinkedDeque<>();
-    private final Component title;
-    private final List<Component> lines;
+    public Component title;
+    public List<Component> lines;
 
     /**
      * Create a new board

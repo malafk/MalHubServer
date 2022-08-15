@@ -29,6 +29,7 @@ import net.minestom.server.instance.block.Block;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.time.Duration;
 import java.util.ArrayList;
 
 public class MalHubServer {
@@ -100,6 +101,15 @@ public class MalHubServer {
 
         PvpExtension.init();
         MinecraftServer.getGlobalEventHandler().addChild(PvpExtension.events());
+
+        MinecraftServer.getSchedulerManager().buildTask(new Runnable() {
+            @Override
+            public void run() {
+                playerManager.scoreboards.forEach((player, scoreboard) -> {
+                    playerManager.updateScoreboards();
+                });
+            }
+        }).repeat(Duration.ofSeconds(1)).schedule();
     }
 
 }

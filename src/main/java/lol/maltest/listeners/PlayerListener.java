@@ -92,10 +92,14 @@ public class PlayerListener {
         handler.addListener(PlayerSkinInitEvent.class, event -> {
             if(event.getPlayer() instanceof FakePlayer) return;
             if(!server.serverConfig.getBoolean("online-mode")) return;
-            System.out.println(event.getPlayer().getUuid().toString());
+            System.out.println(event.getPlayer().getUuid());
             PlayerSkin skinFromUUID = PlayerSkin.fromUuid(event.getPlayer().getUuid().toString());
             PlayerSkin skin = new PlayerSkin(skinFromUUID.textures(), skinFromUUID.signature());
             event.setSkin(skin);
+        });
+
+        handler.addListener(PlayerDisconnectEvent.class, event -> {
+            server.playerManager.destoryScoreboard(event.getPlayer());
         });
 
     }

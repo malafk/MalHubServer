@@ -3,3 +3,9 @@ port: 25565
 online-mode: true
 items:
   grappler: "&d⛏ &lGrappler &7[Right Click]"
+scoreboard:
+  title: "&c&lScoreboard"
+  lines:
+    - "&7"
+    - "&8placeholder "
+    - "&#084cfba&#1256fbn&#1b60fbo&#2569fbt&#2f73fbh&#397dfce&#4287fcr &#4c91fcp&#569bfcl&#5fa4fca&#69aefcc&#73b8fce&#7cc2fch&#86ccfdo&#90d6fdl&#9adffdd&#a3e9fde&#adf3fdr"
