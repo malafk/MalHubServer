@@ -3,6 +3,7 @@
 hub server made in minestom for my future servers
 this server has handled 1000 players during a test fine check image below
 
+update: server held 9000 players when they were all hidden :D
 
 current features
 - npcs

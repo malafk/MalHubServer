@@ -6,8 +6,10 @@ import lol.maltest.MalHubServer;
 import lol.maltest.entity.NPCEntity;
 import lol.maltest.impl.events.NPCClickEvent;
 import lol.maltest.utils.ChatUtil;
+import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.adventure.audience.Audiences;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.GameMode;
@@ -86,6 +88,10 @@ public class PlayerListener {
                 firstLogin = false;
             }
             player.setGameMode(GameMode.CREATIVE);
+//            if (player.getUsername().contains("Bot")) {
+//                Audiences.all().sendMessage(ChatUtil.color("&e" + player.getUsername() + " &fhas joined the server"));
+//                player.updateViewableRule(player1 -> false);
+//            }
             server.playerManager.createScoreboard(player);
         });
 
