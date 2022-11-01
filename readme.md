@@ -1,13 +1,13 @@
 # MalHubServer
 
-hub server made in minestom for my future servers
-this server has handled 1000 players during a test fine check image below
+a minecraft hub server made in minestom for my/your future servers
+this server has handled 9000 players during a test with the only limitation being bandwidth, check image below
 
-update: server held 9000 players when they were all hidden :D
+update: server held 9000 players when all players were hidden
 
 current features
 - npcs
-- holgrams (only for npcs rn)
+- holgrams (only for npcs atm)
 - chat format
 - grappler
 - animated scoreboard
