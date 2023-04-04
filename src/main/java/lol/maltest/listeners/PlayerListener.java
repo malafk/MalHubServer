@@ -1,6 +1,5 @@
 package lol.maltest.listeners;
 
-import io.github.bloepiloepi.pvp.events.PlayerFishEvent;
 import io.github.bloepiloepi.pvp.projectile.FishingBobber;
 import lol.maltest.MalHubServer;
 import lol.maltest.entity.NPCEntity;
@@ -53,17 +52,17 @@ public class PlayerListener {
             event.setChatFormat((playerChatEvent) -> ChatUtil.color("&f" + playerChatEvent.getPlayer().getUsername() + ": " + event.getMessage()));
         });
 
-        handler.addListener(PlayerFishEvent.class, event -> {
-            Pos bobber = event.getBobber().getPosition();
-            Pos playerLoc = event.getPlayer().getPosition();
-            Vec vec = new Vec(bobber.x() - playerLoc.x(), 0.7, bobber.z() - playerLoc.z()).mul(15);
-                        event.getPlayer().setVelocity(vec);
-        });
+//        handler.addListener(PlayerFishEvent.class, event -> {
+//            Pos bobber = event.getBobber().getPosition();
+//            Pos playerLoc = event.getPlayer().getPosition();
+//            Vec vec = new Vec(bobber.x() - playerLoc.x(), 0.7, bobber.z() - playerLoc.z()).mul(15);
+//                        event.getPlayer().setVelocity(vec);
+//        });
 
-        handler.addListener(NPCClickEvent.class, event -> {
-            String command = server.npcConfig.getString("npcs." + event.npc.id() + ".command");
-            event.player.chat("/" + command);
-        });
+//        handler.addListener(NPCClickEvent.class, event -> {
+//            String command = server.npcConfig.getString("npcs." + event.npc.id() + ".command");
+//            event.player.chat("/" + command);
+//        });
 
         handler.addListener(PlayerEntityInteractEvent.class, event -> {
             if(event.getTarget() instanceof NPCEntity) {
@@ -87,11 +86,10 @@ public class PlayerListener {
                 server.hologramManager.loadFromConfig();
                 firstLogin = false;
             }
-            player.setGameMode(GameMode.CREATIVE);
-//            if (player.getUsername().contains("Bot")) {
-//                Audiences.all().sendMessage(ChatUtil.color("&e" + player.getUsername() + " &fhas joined the server"));
-//                player.updateViewableRule(player1 -> false);
-//            }
+            if (player.getUsername().contains("Bot")) {
+                Audiences.all().sendMessage(ChatUtil.color("&e" + player.getUsername() + " &fhas joined the server [#" + MinecraftServer.getConnectionManager().getOnlinePlayers().size() + "]"));
+                player.updateViewableRule(player1 -> false);
+            }
             server.playerManager.createScoreboard(player);
         });
 

@@ -22,8 +22,8 @@ dependencies {
     implementation 'com.github.Minestom:Minestom:-SNAPSHOT'
     implementation 'dev.dejvokep:boosted-yaml:1.3'
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
-    implementation 'com.github.malafk:MinestomPvP:717f6e91c5'
-
+    implementation 'com.github.TogAr2:MinestomPvP:713f5be93b'
+    implementation 'com.github.Articdive.JNoise:jnoise-pipeline:4.0.0'
 }
 
 jar {

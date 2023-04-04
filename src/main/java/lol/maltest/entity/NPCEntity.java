@@ -110,8 +110,16 @@ public class NPCEntity extends LivingEntity implements NavigableEntity {
 
         return new PlayerInfoPacket(
                 PlayerInfoPacket.Action.ADD_PLAYER,
-                List.of(new PlayerInfoPacket.AddPlayer(uuid, name, List.of(new PlayerInfoPacket.AddPlayer.Property("textures",playerSkin.textures(),playerSkin.signature())), GameMode.CREATIVE, 0, displayName))
+                List.of(new PlayerInfoPacket.AddPlayer(
+                        uuid,
+                        name,
+                        List.of(new PlayerInfoPacket.AddPlayer.Property("textures",playerSkin.textures(),playerSkin.signature())),
+                        GameMode.SURVIVAL,
+                        0,
+                        Component.text("Bot-" + name), null)
+                )
         );
+//        return null;
     }
 
     private @NotNull PlayerInfoPacket generatePlayerHideInfo() {
